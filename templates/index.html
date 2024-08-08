@@ -6,7 +6,9 @@
 
 {% block main %}
     <form action="/" method="post">
-        <input autocomplete="off" autofocus name="name" placeholder="Name" type="text">
-        <button type="submit">Submit</button>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="place" placeholder="Place" type="text">
+        </div>
+        <button class="btn btn-primary">Search</button>
     </form>
 {% endblock %}
