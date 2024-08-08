@@ -2,7 +2,7 @@ import requests
 import json
 
 def get_location(query):
-    url = "https://nominatim.openstreetmap.org/search"
+    url = "https://nominatim.openstreetmap.org/search?"
 
     headers = {
         "User-Agent": "MyWeatherAppProject {molsas2020@outlook.com}"
