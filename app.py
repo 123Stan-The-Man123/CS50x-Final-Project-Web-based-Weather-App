@@ -10,7 +10,12 @@ def index():
     if request.method == "POST":
         query = request.form.get("place")
         information = get_location(query)
+
+        if information == "No results found.":
+            return render_template("weather.html", information=information)
+        
         forecast = get_forecast(information["latitude"], information["longitude"])
         
         return render_template("weather.html", information=information, forecast=forecast)
+        
     return render_template("index.html")
