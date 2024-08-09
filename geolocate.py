@@ -1,6 +1,8 @@
 import requests
 import json
 
+#Uses nominatim's geocoding API: https://nominatim.org/release-docs/develop/api/Overview/
+
 def get_location(query):
     url = "https://nominatim.openstreetmap.org/search?"
 
