@@ -1,3 +1,4 @@
+from datetime import datetime
 import requests
 import json
 
@@ -9,8 +10,9 @@ def get_forecast(lat, lon):
     params = {
         "latitude": lat,
         "longitude": lon,
-        "hourly": ["temperature_2m", "relative_humidity_2m", "apparent_temperature", "precipitation_probability", "precipitation", "weather_code"],
-        "daily": ["weather_code", "temperature_2m_max", "temperature_2m_min", "sunrise", "sunset", "daylight_duration", "wind_speed_10m_max", "wind_direction_10m_dominant"]
+        "timezone": "auto",
+        "hourly": ["temperature_2m", "relative_humidity_2m", "apparent_temperature", "precipitation_probability", "weather_code", "wind_speed_10m"],
+        "daily": ["weather_code", "temperature_2m_max", "temperature_2m_min", "sunrise", "sunset", "daylight_duration"]
     }
 
     try:
@@ -23,5 +25,5 @@ def get_forecast(lat, lon):
         else:
             return "No results found."
     
-    except requests.exceptions.RequestException() as e:
+    except requests.exceptions.RequestException as e:
         return f"error: {e}"

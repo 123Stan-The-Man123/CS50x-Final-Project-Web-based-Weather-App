@@ -2,12 +2,45 @@ html, body, footer {
     min-height: 100%;
 }
 
+body, table.table {
+    background-color: #2D3449;
+    color: white;
+}
+
+h1.place {
+    margin-top: 5%;
+    text-decoration: underline;
+}
+
 footer.footer {
     background-color: #f8f9fa;
+    color: black;
     padding: 1rem;
     margin-top: auto;
     margin-bottom: 0;
     text-align: center;
     width: 100%;
     bottom: 0;
+}
+
+div.scrollable {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+table.table {
+    margin: auto 5%;
+    margin-bottom: 1%;
+}
+
+div.vr {
+    background-color: white;
+    color: white;
+    border-color: white;
+}
+
+div#bottom-div {
+    margin-top: 25%;
 }

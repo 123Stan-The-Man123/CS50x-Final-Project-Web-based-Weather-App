@@ -7,7 +7,8 @@ def get_location(query):
     url = "https://nominatim.openstreetmap.org/search?"
 
     headers = {
-        "User-Agent": "MyWeatherAppProject {molsas2020@outlook.com}"
+        "User-Agent": "MyWeatherAppProject {molsas2020@outlook.com}",
+        "Accept-Language": "en"
     }
 
     params = {
@@ -22,7 +23,7 @@ def get_location(query):
         data = response.json()
 
         if data:
-            place = data[0]["display_name"]
+            place = data[0]["name"]
             latitude = data[0]["lat"]
             longitude = data[0]["lon"]
 
