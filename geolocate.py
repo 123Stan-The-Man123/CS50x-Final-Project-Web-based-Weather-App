@@ -24,11 +24,13 @@ def get_location(query):
 
         if data:
             place = data[0]["name"]
+            display = data[0]["display_name"]
             latitude = data[0]["lat"]
             longitude = data[0]["lon"]
 
             return {
                 "place": place,
+                "display": display,
                 "latitude": latitude,
                 "longitude": longitude
             }

@@ -9,7 +9,6 @@ body, table.table {
 
 h1.place {
     margin-top: 5%;
-    text-decoration: underline;
 }
 
 footer.footer {
@@ -42,5 +41,5 @@ div.vr {
 }
 
 div#bottom-div {
-    margin-top: 25%;
+    margin-top: 15%;
 }
