@@ -15,7 +15,7 @@ footer.footer {
     background-color: #f8f9fa;
     color: black;
     padding: 1rem;
-    margin-top: auto;
+    margin-top: 5%;
     margin-bottom: 0;
     text-align: center;
     width: 100%;
@@ -27,6 +27,10 @@ div.scrollable {
     flex-direction: row;
     overflow-x: auto;
     overflow-y: hidden;
+}
+
+p.error {
+    margin-top: 5%;
 }
 
 table.table {
@@ -42,4 +46,13 @@ div.vr {
 
 div#bottom-div {
     margin-top: 15%;
+}
+
+button#random {
+    margin-left: 2.5%;
+}
+
+a.random {
+    color: white;
+    text-decoration: none;
 }

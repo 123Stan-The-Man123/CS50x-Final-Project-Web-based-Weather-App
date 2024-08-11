@@ -10,6 +10,8 @@
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="place" placeholder="Place" type="text">
         </div>
         <button class="btn btn-primary">Search</button>
+        <button class="btn btn-primary" id="random"><a class="random" href="/random">Random</a></button>
     </form>
+    <p class="error">{{ error }}</p>
     {% block weather %}{% endblock %}
 {% endblock %}
