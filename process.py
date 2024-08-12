@@ -13,13 +13,13 @@ def process_request(information, flag):
 
         information = get_location(query)
         
-        return process_request(information, flag)
+        return process_request(information, True)
     
-    if information == "No resullts found":
+    if information == "No results found.":
         return render_template("index.html", error="No results found.")
 
     forecast = get_forecast(information["latitude"], information["longitude"])
-
+    
     days = []
     day = ""
 
@@ -37,7 +37,10 @@ def process_request(information, flag):
 
     display = information["display"].split(",")
 
-    name = display[0] + ", " + display[-1]
+    if display[0] == display[-1]:
+        name = display[0]
+    else:
+        name = display[0] + ", " + display[-1]
     
     if flag:
         return render_template("weather.html", place=information["display"], days=days, times=forecast["hourly"]["time"], code=forecast["hourly"]["weather_code"], information=information, forecast=forecast, durations=durations)
