@@ -93,7 +93,7 @@
                 <th scope="col">Sunset</th>
                 <th scope="col">Sunlight Duration (hours)</th>
             </tr>
-            {% for i in range(0, 6) %}
+            {% for i in range(0, 7) %}
                 <tr>
                     <th scope="row">{{ days[i] }}</th>
                     {% if forecast["daily"]["weather_code"][i] in [0, 1] %}
