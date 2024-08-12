@@ -5,15 +5,13 @@ from geolocate import get_location
 from random import uniform
 
 def process_request(information, flag):
-    if information == "No results found." and flag:
+    while information == "No results found." and flag:
         lat = uniform(-90, 90)
         lon = uniform(-180, 180)
 
         query = str(lat) + " " + str(lon)
 
         information = get_location(query)
-        
-        return process_request(information, True)
     
     if information == "No results found.":
         return render_template("index.html", error="No results found.")
