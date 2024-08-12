@@ -1,449 +1,83 @@
 {% extends "index.html" %}
 
 {% block weather %}
-    <h1 class="place">{{ place }}</h1>
+    <h1 class="place">{{ title }}</h1>
+    <form action="/bookmarks" method="post">
+        <input type="hidden" name="form_id" value="form1">
+        <input type="hidden" name="place" value="{{ place }}">
+        <input type="hidden" name="display" value="{{ display }}">
+        <input type="hidden" name="lat" value="{{ lat }}">
+        <input type="hidden" name="lon" value="{{ lon }}">
+        <button class="btn btn-primary" type="submit">Bookmark</button>
+    </form>
     <div class="scrollable">
-        <table class="table">
-            <tr>
-                <th>Today</th>
-            </tr>
-            <tr>
-                <th scope="col"></th>
-                {% for time in range(0, 24) %}
-                    <th scope="col">{{ times[time][11:] }}</th>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Weather</th>
-                {% for weather in range(0, 24) %}
-                    {% if code[weather] in [0, 1] %}
-                        <td><img src="../static/clear_sky_day.png" alt="clear"></td>
-                    {% elif code[weather] == 2 %}
-                        <td><img src="../static/partial_cloud_day.png" alt="partial cloud"></td>
-                    {% elif code[weather] == 3 %}
-                        <td><img src="../static/cloudy_day.png" alt="cloudy"></td>
-                    {% elif code[weather] in [45, 48] %}
-                        <td><img src="../static/foggy.png"></td>
-                    {% elif code[weather] in [51, 53, 55, 61, 63, 65, 80, 81, 82] %}
-                        <td><img src="../static/rain.png" alt="rain"></td>
-                    {% elif code[weather] in [56, 57, 66,67] %}
-                        <td><img src="../static/cold_rain.png" alt="cold rain"></td>
-                    {% elif code[weather] in [71, 73, 75, 77, 85, 86] %}
-                        <td><img src="../static/snow.png" alt="snow"></td>
-                    {% elif code[weather] in [95, 96, 99] %}
-                        <td><img src="../static/thunder.png" alt="thunder"></td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Chance of Precipitaion</th>
-                {% for chance in range(0, 24) %}
-                    <td>{{ forecast["hourly"]["precipitation_probability"][chance] }}%</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Temperature (°C)</th>
-                {% for temp in range(0, 24) %}
-                    <td>{{ forecast["hourly"]["temperature_2m"][temp] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="col">Feels like (°C)</th>
-                {% for temp in range(0, 24) %}
-                    <td>{{ forecast["hourly"]["apparent_temperature"][temp] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Wind Speed (mph)</th>
-                {% for speed in range(0, 24) %}
-                    <td>{{ forecast["hourly"]["wind_speed_10m"][speed] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Humidity</th>
-                {% for humidity in range(0, 24) %}
-                    <td>{{ forecast["hourly"]["wind_speed_10m"][humidity] }}%</td>
-                {% endfor %}
-            </tr>
-        </table>
-        <table class="table">
-            <tr>
-                <th>{{ days[1] }}</th>
-            </tr>
-            <tr>
-                <th scope="col"></th>
-                {% for time in range(24, 48) %}
-                    <th scope="col">{{ times[time][11:] }}</th>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Weather</th>
-                {% for weather in range(24, 48) %}
-                    {% if code[weather] in [0, 1] %}
-                        <td><img src="../static/clear_sky_day.png" alt="clear"></td>
-                    {% elif code[weather] == 2 %}
-                        <td><img src="../static/partial_cloud_day.png" alt="partial cloud"></td>
-                    {% elif code[weather] == 3 %}
-                        <td><img src="../static/cloudy_day.png" alt="cloudy"></td>
-                    {% elif code[weather] in [45, 48] %}
-                        <td><img src="../static/foggy.png"></td>
-                    {% elif code[weather] in [51, 53, 55, 61, 63, 65, 80, 81, 82] %}
-                        <td><img src="../static/rain.png" alt="rain"></td>
-                    {% elif code[weather] in [56, 57, 66,67] %}
-                        <td><img src="../static/cold_rain.png" alt="cold rain"></td>
-                    {% elif code[weather] in [71, 73, 75, 77, 85, 86] %}
-                        <td><img src="../static/snow.png" alt="snow"></td>
-                    {% elif code[weather] in [95, 96, 99] %}
-                        <td><img src="../static/thunder.png" alt="thunder"></td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Chance of Precipitaion</th>
-                {% for chance in range(24, 48) %}
-                    <td>{{ forecast["hourly"]["precipitation_probability"][chance] }}%</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Temperature (°C)</th>
-                {% for temp in range(24, 48) %}
-                    <td>{{ forecast["hourly"]["temperature_2m"][temp] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="col">Feels like (°C)</th>
-                {% for temp in range(24, 48) %}
-                    <td>{{ forecast["hourly"]["apparent_temperature"][temp] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Wind Speed (mph)</th>
-                {% for speed in range(24, 48) %}
-                    <td>{{ forecast["hourly"]["wind_speed_10m"][speed] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Humidity</th>
-                {% for humidity in range(24, 48) %}
-                    <td>{{ forecast["hourly"]["wind_speed_10m"][humidity] }}%</td>
-                {% endfor %}
-            </tr>
-        </table>
-        <table class="table">
-            <tr>
-                <th>{{ days[2] }}</th>
-            </tr>
-            <tr>
-                <th scope="col"></th>
-                {% for time in range(48, 72) %}
-                    <th scope="col">{{ times[time][11:] }}</th>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Weather</th>
-                {% for weather in range(48, 72) %}
-                    {% if code[weather] in [0, 1] %}
-                        <td><img src="../static/clear_sky_day.png" alt="clear"></td>
-                    {% elif code[weather] == 2 %}
-                        <td><img src="../static/partial_cloud_day.png" alt="partial cloud"></td>
-                    {% elif code[weather] == 3 %}
-                        <td><img src="../static/cloudy_day.png" alt="cloudy"></td>
-                    {% elif code[weather] in [45, 48] %}
-                        <td><img src="../static/foggy.png"></td>
-                    {% elif code[weather] in [51, 53, 55, 61, 63, 65, 80, 81, 82] %}
-                        <td><img src="../static/rain.png" alt="rain"></td>
-                    {% elif code[weather] in [56, 57, 66,67] %}
-                        <td><img src="../static/cold_rain.png" alt="cold rain"></td>
-                    {% elif code[weather] in [71, 73, 75, 77, 85, 86] %}
-                        <td><img src="../static/snow.png" alt="snow"></td>
-                    {% elif code[weather] in [95, 96, 99] %}
-                        <td><img src="../static/thunder.png" alt="thunder"></td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Chance of Precipitaion</th>
-                {% for chance in range(48, 72) %}
-                    <td>{{ forecast["hourly"]["precipitation_probability"][chance] }}%</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Temperature (°C)</th>
-                {% for temp in range(48, 72) %}
-                    <td>{{ forecast["hourly"]["temperature_2m"][temp] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="col">Feels like (°C)</th>
-                {% for temp in range(48, 72) %}
-                    <td>{{ forecast["hourly"]["apparent_temperature"][temp] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Wind Speed (mph)</th>
-                {% for speed in range(48, 72) %}
-                    <td>{{ forecast["hourly"]["wind_speed_10m"][speed] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Humidity</th>
-                {% for humidity in range(48, 72) %}
-                    <td>{{ forecast["hourly"]["wind_speed_10m"][humidity] }}%</td>
-                {% endfor %}
-            </tr>
-        </table>
-        <table class="table">
-            <tr>
-                <th>{{ days[3] }}</th>
-            </tr>
-            <tr>
-                <th scope="col"></th>
-                {% for time in range(72, 96) %}
-                    <th scope="col">{{ times[time][11:] }}</th>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Weather</th>
-                {% for weather in range(72, 96) %}
-                    {% if code[weather] in [0, 1] %}
-                        <td><img src="../static/clear_sky_day.png" alt="clear"></td>
-                    {% elif code[weather] == 2 %}
-                        <td><img src="../static/partial_cloud_day.png" alt="partial cloud"></td>
-                    {% elif code[weather] == 3 %}
-                        <td><img src="../static/cloudy_day.png" alt="cloudy"></td>
-                    {% elif code[weather] in [45, 48] %}
-                        <td><img src="../static/foggy.png"></td>
-                    {% elif code[weather] in [51, 53, 55, 61, 63, 65, 80, 81, 82] %}
-                        <td><img src="../static/rain.png" alt="rain"></td>
-                    {% elif code[weather] in [56, 57, 66,67] %}
-                        <td><img src="../static/cold_rain.png" alt="cold rain"></td>
-                    {% elif code[weather] in [71, 73, 75, 77, 85, 86] %}
-                        <td><img src="../static/snow.png" alt="snow"></td>
-                    {% elif code[weather] in [95, 96, 99] %}
-                        <td><img src="../static/thunder.png" alt="thunder"></td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Chance of Precipitaion</th>
-                {% for chance in range(72, 96) %}
-                    <td>{{ forecast["hourly"]["precipitation_probability"][chance] }}%</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Temperature (°C)</th>
-                {% for temp in range(72, 96) %}
-                    <td>{{ forecast["hourly"]["temperature_2m"][temp] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="col">Feels like (°C)</th>
-                {% for temp in range(72, 96) %}
-                    <td>{{ forecast["hourly"]["apparent_temperature"][temp] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Wind Speed (mph)</th>
-                {% for speed in range(72, 96) %}
-                    <td>{{ forecast["hourly"]["wind_speed_10m"][speed] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Humidity</th>
-                {% for humidity in range(72, 96) %}
-                    <td>{{ forecast["hourly"]["wind_speed_10m"][humidity] }}%</td>
-                {% endfor %}
-            </tr>
-        </table>
-        <table class="table">
-            <tr>
-                <th>{{ days[4] }}</th>
-            </tr>
-            <tr>
-                <th scope="col"></th>
-                {% for time in range(96, 120) %}
-                    <th scope="col">{{ times[time][11:] }}</th>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Weather</th>
-                {% for weather in range(96, 120) %}
-                    {% if code[weather] in [0, 1] %}
-                        <td><img src="../static/clear_sky_day.png" alt="clear"></td>
-                    {% elif code[weather] == 2 %}
-                        <td><img src="../static/partial_cloud_day.png" alt="partial cloud"></td>
-                    {% elif code[weather] == 3 %}
-                        <td><img src="../static/cloudy_day.png" alt="cloudy"></td>
-                    {% elif code[weather] in [45, 48] %}
-                        <td><img src="../static/foggy.png"></td>
-                    {% elif code[weather] in [51, 53, 55, 61, 63, 65, 80, 81, 82] %}
-                        <td><img src="../static/rain.png" alt="rain"></td>
-                    {% elif code[weather] in [56, 57, 66,67] %}
-                        <td><img src="../static/cold_rain.png" alt="cold rain"></td>
-                    {% elif code[weather] in [71, 73, 75, 77, 85, 86] %}
-                        <td><img src="../static/snow.png" alt="snow"></td>
-                    {% elif code[weather] in [95, 96, 99] %}
-                        <td><img src="../static/thunder.png" alt="thunder"></td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Chance of Precipitaion</th>
-                {% for chance in range(96, 120) %}
-                    <td>{{ forecast["hourly"]["precipitation_probability"][chance] }}%</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Temperature (°C)</th>
-                {% for temp in range(96, 120) %}
-                    <td>{{ forecast["hourly"]["temperature_2m"][temp] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="col">Feels like (°C)</th>
-                {% for temp in range(96, 120) %}
-                    <td>{{ forecast["hourly"]["apparent_temperature"][temp] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Wind Speed (mph)</th>
-                {% for speed in range(96, 120) %}
-                    <td>{{ forecast["hourly"]["wind_speed_10m"][speed] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Humidity</th>
-                {% for humidity in range(96, 120) %}
-                    <td>{{ forecast["hourly"]["wind_speed_10m"][humidity] }}%</td>
-                {% endfor %}
-            </tr>
-        </table>
-        <table class="table">
-            <tr>
-                <th>{{ days[5] }}</th>
-            </tr>
-            <tr>
-                <th scope="col"></th>
-                {% for time in range(120, 144) %}
-                    <th scope="col">{{ times[time][11:] }}</th>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Weather</th>
-                {% for weather in range(120, 144) %}
-                    {% if code[weather] in [0, 1] %}
-                        <td><img src="../static/clear_sky_day.png" alt="clear"></td>
-                    {% elif code[weather] == 2 %}
-                        <td><img src="../static/partial_cloud_day.png" alt="partial cloud"></td>
-                    {% elif code[weather] == 3 %}
-                        <td><img src="../static/cloudy_day.png" alt="cloudy"></td>
-                    {% elif code[weather] in [45, 48] %}
-                        <td><img src="../static/foggy.png"></td>
-                    {% elif code[weather] in [51, 53, 55, 61, 63, 65, 80, 81, 82] %}
-                        <td><img src="../static/rain.png" alt="rain"></td>
-                    {% elif code[weather] in [56, 57, 66,67] %}
-                        <td><img src="../static/cold_rain.png" alt="cold rain"></td>
-                    {% elif code[weather] in [71, 73, 75, 77, 85, 86] %}
-                        <td><img src="../static/snow.png" alt="snow"></td>
-                    {% elif code[weather] in [95, 96, 99] %}
-                        <td><img src="../static/thunder.png" alt="thunder"></td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Chance of Precipitaion</th>
-                {% for chance in range(120, 144) %}
-                    <td>{{ forecast["hourly"]["precipitation_probability"][chance] }}%</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Temperature (°C)</th>
-                {% for temp in range(120, 144) %}
-                    <td>{{ forecast["hourly"]["temperature_2m"][temp] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="col">Feels like (°C)</th>
-                {% for temp in range(120, 144) %}
-                    <td>{{ forecast["hourly"]["apparent_temperature"][temp] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Wind Speed (mph)</th>
-                {% for speed in range(120, 144) %}
-                    <td>{{ forecast["hourly"]["wind_speed_10m"][speed] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Humidity</th>
-                {% for humidity in range(120, 144) %}
-                    <td>{{ forecast["hourly"]["wind_speed_10m"][humidity] }}%</td>
-                {% endfor %}
-            </tr>
-        </table>
-        <table class="table">
-            <tr>
-                <th>{{ days[6] }}</th>
-            </tr>
-            <tr>
-                <th scope="col"></th>
-                {% for time in range(144, 168) %}
-                    <th scope="col">{{ times[time][11:] }}</th>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Weather</th>
-                {% for weather in range(144, 168) %}
-                    {% if code[weather] in [0, 1] %}
-                        <td><img src="../static/clear_sky_day.png" alt="clear"></td>
-                    {% elif code[weather] == 2 %}
-                        <td><img src="../static/partial_cloud_day.png" alt="partial cloud"></td>
-                    {% elif code[weather] == 3 %}
-                        <td><img src="../static/cloudy_day.png" alt="cloudy"></td>
-                    {% elif code[weather] in [45, 48] %}
-                        <td><img src="../static/foggy.png"></td>
-                    {% elif code[weather] in [51, 53, 55, 61, 63, 65, 80, 81, 82] %}
-                        <td><img src="../static/rain.png" alt="rain"></td>
-                    {% elif code[weather] in [56, 57, 66,67] %}
-                        <td><img src="../static/cold_rain.png" alt="cold rain"></td>
-                    {% elif code[weather] in [71, 73, 75, 77, 85, 86] %}
-                        <td><img src="../static/snow.png" alt="snow"></td>
-                    {% elif code[weather] in [95, 96, 99] %}
-                        <td><img src="../static/thunder.png" alt="thunder"></td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Chance of Precipitaion</th>
-                {% for chance in range(144, 168) %}
-                    <td>{{ forecast["hourly"]["precipitation_probability"][chance] }}%</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Temperature (°C)</th>
-                {% for temp in range(144, 168) %}
-                    <td>{{ forecast["hourly"]["temperature_2m"][temp] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="col">Feels like (°C)</th>
-                {% for temp in range(144, 168) %}
-                    <td>{{ forecast["hourly"]["apparent_temperature"][temp] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Wind Speed (mph)</th>
-                {% for speed in range(144, 168) %}
-                    <td>{{ forecast["hourly"]["wind_speed_10m"][speed] }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                <th scope="row">Humidity</th>
-                {% for humidity in range(144, 168) %}
-                    <td>{{ forecast["hourly"]["wind_speed_10m"][humidity] }}%</td>
-                {% endfor %}
-            </tr>
-        </table>
+        {% for day_index in range(7) %}
+            <table class="table">
+                <tr>
+                    <th>{{ days[day_index] }}</th>
+                </tr>
+                <tr>
+                    <th scope="col"></th>
+                    {% for time in range(0, 24) %}
+                        <th scope="col">{{ times[time][11:] }}</th>
+                    {% endfor %}
+                </tr>
+                {% set start_hour = day_index * 24 %}
+                {% set end_hour = (day_index + 1) * 24 %}
+                <tr>
+                    <th scope="row">Weather</th>
+                    {% for weather in range(start_hour, end_hour) %}
+                        {% if code[weather] in [0, 1] %}
+                            <td><img src="../static/clear_sky_day.png" alt="clear"></td>
+                        {% elif code[weather] == 2 %}
+                            <td><img src="../static/partial_cloud_day.png" alt="partial cloud"></td>
+                        {% elif code[weather] == 3 %}
+                            <td><img src="../static/cloudy_day.png" alt="cloudy"></td>
+                        {% elif code[weather] in [45, 48] %}
+                            <td><img src="../static/foggy.png"></td>
+                        {% elif code[weather] in [51, 53, 55, 61, 63, 65, 80, 81, 82] %}
+                            <td><img src="../static/rain.png" alt="rain"></td>
+                        {% elif code[weather] in [56, 57, 66,67] %}
+                            <td><img src="../static/cold_rain.png" alt="cold rain"></td>
+                        {% elif code[weather] in [71, 73, 75, 77, 85, 86] %}
+                            <td><img src="../static/snow.png" alt="snow"></td>
+                        {% elif code[weather] in [95, 96, 99] %}
+                            <td><img src="../static/thunder.png" alt="thunder"></td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th scope="row">Chance of Precipitaion</th>
+                    {% for chance in range(start_hour, end_hour) %}
+                        <td>{{ forecast["hourly"]["precipitation_probability"][chance] }}%</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th scope="row">Temperature (°C)</th>
+                    {% for temp in range(start_hour, end_hour) %}
+                        <td>{{ forecast["hourly"]["temperature_2m"][temp] }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th scope="col">Feels like (°C)</th>
+                    {% for temp in range(start_hour, end_hour) %}
+                        <td>{{ forecast["hourly"]["apparent_temperature"][temp] }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th scope="row">Wind Speed (mph)</th>
+                    {% for speed in range(start_hour, end_hour) %}
+                        <td>{{ forecast["hourly"]["wind_speed_10m"][speed] }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th scope="row">Humidity</th>
+                    {% for humidity in range(start_hour, end_hour) %}
+                        <td>{{ forecast["hourly"]["wind_speed_10m"][humidity] }}%</td>
+                    {% endfor %}
+                </tr>
+            </table>
+        {% endfor %}
     </div>
     <div class="scrollable" id="bottom-div">
         <table class="table">

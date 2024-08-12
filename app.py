@@ -25,7 +25,11 @@ def after_request(response):
 @login_required
 def index():
     if request.method == "POST":
-        query = request.form.get("place")
+        if request.form.get("form_id") == "bookmark":
+            query = request.form.get("search")
+        else:
+            query = request.form.get("place")
+        
         information = get_location(query)
 
         return process_request(information, False)
@@ -43,6 +47,38 @@ def random():
     information = get_location(query)
 
     return process_request(information, True)
+
+@app.route("/bookmarks", methods=["GET", "POST"])
+@login_required
+def bookmarks():
+    if request.method == "POST":
+        if request.form.get("form_id") == "form1":
+            id = session["user_id"]
+            place = request.form.get("place")
+            display = request.form.get("display")
+            latitude = float(request.form.get("lat"))
+            longitude = float(request.form.get("lon"))
+
+            connection = sqlite3.connect("weather.db")
+            cursor = connection.cursor()
+
+            cursor.execute("INSERT INTO bookmarks (user_id, place, display, latitude, longitude) VALUES(?, ?, ?, ?, ?)", (id, place, display, latitude, longitude))
+            connection.commit()
+
+            return redirect("/bookmarks")
+
+    else:
+        id = session["user_id"]
+
+        connection = sqlite3.connect("weather.db")
+        cursor = connection.cursor()
+
+        rows = cursor.execute("SELECT * FROM bookmarks WHERE user_id = ?", (id,))
+        rows = rows.fetchall()
+
+        connection.commit()
+
+        return render_template("bookmarks.html", rows=rows)
 
 @app.route("/register", methods = ["GET", "POST"])
 def register():

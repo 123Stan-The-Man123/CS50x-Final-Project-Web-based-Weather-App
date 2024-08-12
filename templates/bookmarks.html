@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Bookmarks
+{% endblock %}
+
+{% block main %}
+    <table class="table">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Display</th>
+            <th scope="col"></th>
+        </tr>
+        {% for row in rows %}
+            <tr>
+                <td scope="row">{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>
+                    <form action="/" method="post">
+                        <input type="hidden" name="form_id" value="bookmark">
+                        <button class="btn btn-primary" name="search" value="{{ row[2] }}" type="submit">Search</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
