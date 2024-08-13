@@ -1,2 +1,10 @@
-Flask
-pytz
+flask
+flask_session
+flask_login
+random
+sqlite3
+werkzeug.security
+datetime
+requests
+json
+functools
