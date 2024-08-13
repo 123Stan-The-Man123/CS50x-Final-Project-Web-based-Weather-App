@@ -1,9 +1,4 @@
 flask
 flask_session
 flask_login
-sqlite3
-werkzeug.security
-datetime
 requests
-json
-functools
