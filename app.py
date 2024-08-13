@@ -24,7 +24,7 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
-#The home page where you search for locations
+# The home page where you search for locations
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():

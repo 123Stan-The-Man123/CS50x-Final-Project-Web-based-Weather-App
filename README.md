@@ -6,7 +6,7 @@ For my cs50x final project, I have made a web-based weather app. Through this pr
 * Register/Login/Logout system
 * Search system (takes location name and geolocates into coordinates for the weather API)
 * Bookmark system (save the coordinates of your favourite places for faster access and no API calls)
-* Random function using recursion (generates random coordinates until it finds a valid location). It is a feature made purely for fun.
+* Random function (generates random coordinates until it finds a valid location). It is a feature made purely for fun.
 
 ##### Files
 There are a few files in this project:
