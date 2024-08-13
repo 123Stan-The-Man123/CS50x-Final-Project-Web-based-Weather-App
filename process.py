@@ -3,6 +3,8 @@ from flask import Flask, render_template, request, jsonify
 from forecast import get_forecast
 from geolocate import get_location
 from random import uniform
+from timezonefinder import TimezoneFinder
+import pytz
 
 def process_request(information, random):
 
@@ -49,9 +51,19 @@ def process_request(information, random):
     else:
         name = display[0] + ", " + display[-1]
     
+    time_find = TimezoneFinder()
+    timezone = time_find.timezone_at(lat=float(information["latitude"]), lng=float(information["longitude"]))
+
+    if timezone:
+        timezone = pytz.timezone(timezone)
+        current_time = datetime.now(timezone)
+        current_hour = current_time.hour
+    else:
+        current_hour = 0
+    
     # If random return display as title
     if random:
-        return render_template("weather.html", place=information["place"], display=information["display"], lat=information["latitude"], lon=information["longitude"], title=information["display"], days=days, times=forecast["hourly"]["time"], code=forecast["hourly"]["weather_code"], forecast=forecast, durations=durations)
+        return render_template("weather.html", place=information["place"], display=information["display"], lat=information["latitude"], lon=information["longitude"], title=information["display"], days=days, times=forecast["hourly"]["time"], code=forecast["hourly"]["weather_code"], forecast=forecast, durations=durations, current_hour=current_hour)
 
     # If not random, return name as title
-    return render_template("weather.html", place=information["place"], display=information["display"], lat=information["latitude"], lon=information["longitude"], title=name, days=days, times=forecast["hourly"]["time"], code=forecast["hourly"]["weather_code"], forecast=forecast, durations=durations)
+    return render_template("weather.html", place=information["place"], display=information["display"], lat=information["latitude"], lon=information["longitude"], title=name, days=days, times=forecast["hourly"]["time"], code=forecast["hourly"]["weather_code"], forecast=forecast, durations=durations, current_hour=current_hour)
