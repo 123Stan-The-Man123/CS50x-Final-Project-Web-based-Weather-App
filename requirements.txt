@@ -2,3 +2,4 @@ flask
 flask_session
 flask_login
 requests
+gunicorn
