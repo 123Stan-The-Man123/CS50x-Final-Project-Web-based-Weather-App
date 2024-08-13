@@ -10,6 +10,7 @@
             <th scope="col">Name</th>
             <th scope="col">Display</th>
             <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
         {% for row in rows %}
             <tr>
@@ -19,6 +20,12 @@
                     <form action="/" method="post">
                         <input type="hidden" name="form_id" value="bookmark">
                         <button class="btn btn-primary" name="search" value="{{ row[2] }}" type="submit">Search</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/bookmarks" method="post">
+                        <input type="hidden" name="form_id" value="remove">
+                        <button class="btn btn-primary" name="remove" value="{{ row[2] }}" type="submit">Remove</button>
                     </form>
                 </td>
             </tr>

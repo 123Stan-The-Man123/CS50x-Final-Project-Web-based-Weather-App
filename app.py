@@ -62,10 +62,32 @@ def bookmarks():
             connection = sqlite3.connect("weather.db")
             cursor = connection.cursor()
 
+            duplicate = cursor.execute("SELECT * FROM bookmarks WHERE user_id = ? AND display = ?", (id, display))
+            duplicate = duplicate.fetchone()
+
+            if duplicate != None:
+                connection.commit()
+
+                return redirect("/bookmarks")
+
             cursor.execute("INSERT INTO bookmarks (user_id, place, display, latitude, longitude) VALUES(?, ?, ?, ?, ?)", (id, place, display, latitude, longitude))
             connection.commit()
 
             return redirect("/bookmarks")
+        
+        elif request.form.get("form_id") == "remove":
+            id = session["user_id"]
+            display = request.form.get("remove")
+
+            connection = sqlite3.connect("weather.db")
+            cursor = connection.cursor()
+
+            cursor.execute("DELETE FROM bookmarks WHERE user_id = ? AND display = ?", (id, display))
+
+            connection.commit()
+
+            return redirect("/bookmarks")
+
 
     else:
         id = session["user_id"]
